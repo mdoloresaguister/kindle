@@ -1,0 +1,490 @@
+/* ==========================================================================
+   1. CONFIGURACIÓN GENERAL (Estilo papel/Kindle, suave para la vista)
+   ========================================================================== */
+body {
+    font-family: 'Segoe UI', Georgia, serif;
+    background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+    background-attachment: fixed; /* Mantiene el degradado fijo al hacer scroll */
+    color: #2c3e50;
+    margin: 0;
+    padding: 20px;
+}
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 { 
+    color: #1a252f; 
+    margin: 0; 
+}
+
+/* LAYOUT PRINCIPAL: DOS COLUMNAS */
+.layout-principal {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* ==========================================================================
+   2. PANEL LATERAL IZQUIERDO (Formularios y Herramientas)
+   ========================================================================== */
+/*.panel-lateral {
+    width: 320px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+    position: sticky;
+    top: 20px;
+}
+*/
+.panel-lateral {
+    width: 320px;
+    background-color: #f5f6fa; /* <-- Cambia esta línea */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+    position: sticky;
+    top: 20px;
+}
+
+
+.panel-lateral h2 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #34495e;
+    border-bottom: 2px solid #f1c40f; /* Detalle dorado */
+    padding-bottom: 5px;
+}
+
+.campo {
+    margin-bottom: 15px;
+}
+
+.campo label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #4a5568;
+}
+
+.campo input, .campo textarea, .campo select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+/* Botón principal de guardar lecturas */
+
+.panel-lateral .btn-guardar {
+    width: 100%;
+    padding: 11px; /* Un píxel menos para compensar el borde */
+    background-color: transparent;
+    color: #2c3e50;
+    border: 2px solid #2c3e50; /* Borde oscuro definido */
+    border-radius: 20px; /* Diseño tipo píldora, más moderno */
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 10px;
+}
+
+.panel-lateral .btn-guardar:hover {
+    background-color: #2c3e50;
+    color: white; /* Invierte los colores al pasar el ratón */
+}
+
+
+/* SECCIÓN NUEVA Y SEPARADA DE COPIAS DE SEGURIDAD */
+.zona-backup {
+    border-top: 2px dashed #cbd5e1; /* Línea discontinua de separación */
+    margin-top: 30px;               /* Separación generosa del formulario */
+    padding-top: 20px;
+}
+
+.zona-backup h3 {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-backup {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+/* BOTÓN DE DESCARGAR: Oscuro y llamativo */
+.btn-exportar {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    margin-bottom: 15px; /* Separación crítica para no pulsar el de abajo por error */
+}
+
+.btn-exportar:hover {
+    background-color: #2c3e50;
+    transform: translateY(-1px);
+}
+
+/* BOTÓN DE RESTAURAR: Gris claro neutro (Totalmente diferente) */
+#btn-disparar-importar.btn-importar {
+    background-color: #f1f2f6;
+    color: #57606f;
+    border: 1px solid #ced6e0;
+}
+
+#btn-disparar-importar.btn-importar:hover {
+    background-color: #dfe4ea;
+    color: #2f3542;
+    border-color: #a4b0be;
+}
+
+/* ==========================================================================
+   3. COLUMNA DERECHA (Buscador y Tarjetas de Libros)
+   ========================================================================== */
+.contenido-derecho {
+    flex: 1;
+}
+
+#buscador {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+}
+
+.contenedor-libros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Tarjeta de Libro Individual */
+.ficha-libro {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* ¡Imprescindible para posicionar la cinta! */
+    overflow: hidden;   /* Esconde las esquinas de la cinta que se salgan de la tarjeta */
+}
+/*
+.portada {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    margin: 0 auto 15px auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}*/
+
+/* ==========================================
+   EFECTO DE AMPLIACIÓN DE PORTADA AL PINCHAR
+   ========================================== */
+
+/* Estilo base de la portada (Preparamos la transición) */
+.portada {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    margin: 0 auto 15px auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    cursor: zoom-in; /* Cambia el puntero a una lupa con un '+' */
+    display: block; /* Asegura que se comporte bien como bloque centrado */
+    
+    /* Efecto suave para cualquier cambio de tamaño o sombra (0.3s) */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, z-index 0s;
+    
+    /* Esencial para que al ampliarse no se corte si el contenedor tiene overflow */
+    position: relative; 
+    z-index: 1;
+}
+
+/* 1. Al acercar el ratón (Hover): Pequeña elevación visual */
+.portada:hover {
+    transform: translateY(-5px); /* Se eleva 5 píxeles */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Sombra más grande y suave */
+}
+
+/* 2. Al hacer CLIC (Active): Ampliación y centrado */
+.portada:active {
+    /* Mantenemos la elevación y aplicamos el zoom (scale 2.2 = 220% de su tamaño) */
+    transform: translateY(-5px) scale(2.2); 
+    
+    /* Máxima sombra para separarla totalmente del fondo */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    
+    /* Se pone por encima de absolutamente todo (títulos, botones...) */
+    z-index: 999;
+    
+    /* Retrasamos el cambio de z-index para que la animación de escala sea limpia */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, z-index 0s 0.1s;
+}
+
+
+
+
+
+
+
+
+.titulo { font-size: 18px; font-weight: bold; margin: 10px 0 5px 0; text-align: center; }
+.autor { font-style: italic; color: #7f8c8d; text-align: center; margin-bottom: 10px; }
+.meta-info { font-size: 13px; background: #f8f9fa; padding: 5px 10px; border-radius: 4px; margin-bottom: 10px; }
+.valoracion { color: #f1c40f; font-weight: bold; margin-bottom: 10px; }
+
+.notas-kindle {
+    font-size: 14px;
+    background-color: #fdfefe;
+    border-left: 3px solid #34495e;
+    padding-left: 10px;
+    margin-top: 10px;
+    font-style: italic;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+/* Botones inferiores de las Fichas (Editar / Eliminar) */
+.botones-ficha {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.btn-accion {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.btn-editar { color: #3498db; }
+.btn-editar:hover { text-decoration: underline; }
+
+.btn-eliminar { color: #e74c3c; }
+.btn-eliminar:hover { text-decoration: underline; }
+
+.zona-editar {
+    margin-top: 5px;
+}
+
+/* Etiqueta para los libros leídos por tu hermana */
+.tag-hermana {
+    display: inline-block;
+    background-color: #f0f4f8;   /* Azul grisáceo muy sutil */
+    color: #4b6584;              /* Texto a juego */
+    font-size: 12px;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;         /* Bordes redondeados tipo píldora */
+    margin: 5px 0 10px 0;
+    border: 1px solid #d1d8e0;
+    text-align: center;
+}
+
+/* ==========================================
+   ESTILOS PARA LIBROS DE SAGA O TRILOGÍA
+   ========================================== */
+
+/* Cuando la ficha es una saga, le añadimos una franja dorada en el borde izquierdo */
+.ficha-libro.es-saga {
+    border-left: 5px solid #f1c40f; /* Franja dorada de 5 píxeles */
+    padding-left: 15px;             /* Reajustamos el espacio interior para compensar */
+}
+
+/* Etiqueta tipo píldora dentro de la ficha */
+.tag-saga {
+    display: inline-block;
+    background-color: #fef9e7;   /* Fondo amarillo muy suave */
+    color: #b7950b;              /* Texto dorado oscuro para que contraste */
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin: 5px 0;
+    border: 1px solid #f9e79f;
+    text-align: center;
+}
+/* LA CINTA EN DIAGONAL */
+.cinta-saga {
+    position: absolute;
+    top: 15px;
+    right: -35px;
+    background-color: #f1c40f; /* Color dorado */
+    color: #2c3e50;            /* Texto oscuro para que contraste */
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    width: 130px;
+    padding: 4px 0;
+    transform: rotate(45deg); /* Hace la magia de inclinarla en diagonal */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+/* ==========================================
+   SISTEMA DE VALORACIÓN POR ESTRELLAS (ORDEN REVERSO SÓLIDO)
+   ========================================== */
+
+/* Invertimos el contenedor para que el selector "~" funcione de izquierda a derecha */
+.rating-estrellas {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.rating-estrellas input {
+    display: none !important;
+}
+
+/* Símbolo por defecto: Estrella vacía y Gris suave */
+.rating-estrellas label {
+    font-size: 32px;
+    color: #d1d8e0; /* Gris apagado muy visible */
+    cursor: pointer;
+    transition: color 0.1s ease;
+    display: inline-block;
+}
+
+/* --- COMPORTAMIENTO HOVER (Ratón por encima) --- */
+/* Al pasar el ratón por una estrella, se ilumina ella y todas sus anteriores */
+.rating-estrellas label:hover,
+.rating-estrellas label:hover ~ label {
+    color: #f1c40f !important;
+}
+
+/* --- COMPORTAMIENTO CHECKED (Seleccionadas) --- */
+/* Cuando un radio se activa, ilumina su correspondiente label y los anteriores */
+.rating-estrellas input:checked ~ label {
+    color: #f1c40f !important;
+}
+/* ==========================================
+   CONTADOR DE LECTURAS (HEADER)
+   ========================================== */
+.contador-lecturas {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #34495e; /* Tono oscuro a juego con los botones principales */
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 16px;
+    border-radius: 20px; /* Diseño tipo píldora */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contador-lecturas span {
+    color: #f1c40f; /* El número resalta en el color dorado de las estrellas */
+    font-size: 16px;
+    margin-left: 4px;
+}
+/* ==========================================
+   ETIQUETA DE LIBRO PENDIENTE EN LA FICHA
+   ========================================== */
+.tag-pendiente-voto {
+    display: inline-block;
+    background-color: #fff5ec; /* Fondo naranja/crema muy suave */
+    color: #e67e22;            /* Texto naranja oscuro descriptivo */
+    border: 1px solid #fadbd8;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+/* ==========================================
+   ESTILO PARA TARJETAS DE LIBROS PENDIENTES
+   ========================================== */
+.ficha-libro.es-pendiente {
+    background: linear-gradient(135deg, #ffffff 60%, #fff9f2 100%); /* Fondo con un toque cálido suave al final */
+    border: 3px dashed #e67e22; /* Borde discontinuo en color naranja para diferenciarlo */
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.05); /* Sombra sutil anaranjada */
+}
+
+/* Ajuste para que la sinopsis se vea completa y espaciosa */
+.notas-kindle {
+    max-height: none !important; 
+    overflow-y: visible !important;
+    margin-bottom: 15px;
+}
+
+/* ==========================================
+   BOTONES DE ORDENACIÓN
+   ========================================== */
+.contenedor-ordenacion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.btn-orden {
+    background-color: #ffffff;
+    color: #57606f;
+    border: 1px solid #ced6e0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-orden:hover {
+    background-color: #dfe4ea;
+    color: #2f3542;
+}
+
+/* Estado del botón que está seleccionado actualmente */
+.btn-orden.activo {
+    background-color: #34495e;
+    color: #ffffff;
+    border-color: #34495e;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* --- COMPORTAMIENTO CHECKED (Seleccionadas) --- */
+/* Cuando un radio se activa, ilumina de forma fija su label y los anteriores */
+.rating-estrellas input:checked ~ label {
+    color: #f1c40f !important; /* Añadimos fuerza para que no se desmarquen al retirar el ratón */
+}

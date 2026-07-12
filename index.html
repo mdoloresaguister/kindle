@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Biblioteca Kindle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>📚 Mis Lecturas de Kindle 📚 </h1>
+        <div class="contador-lecturas">
+            Libros leídos: <span id="total-libros">0</span>
+        </div>
+    </header>
+
+    <div class="layout-principal">
+
+        <!-- PANEL LATERAL IZQUIERDA -->
+        <aside class="panel-lateral">
+
+            <!-- FORMULARIO: AÑADIR LIBRO -->
+            <form id="formulario-libro">
+                <h2>Añadir Nueva Lectura</h2>
+                <div class="campo">
+                    <label for="input-titulo">Título:</label>
+                    <input type="text" id="input-titulo" required>
+                </div>
+
+                <div class="campo">
+                    <label for="input-autor">Autor:</label>
+                    <input type="text" id="input-autor" required>
+                </div>
+
+                <div class="campo">
+                    <label for="input-genero">Género:</label>
+                    <select id="input-genero">
+                        <option value="" disabled selected>Selecciona un género...</option>
+                        <option value="Aventura">Aventura</option>
+                        <option value="Biografía / Ensayo">Biografía / Ensayo</option>
+                        <option value="Ciencia Ficción">Ciencia Ficción</option>
+                        <option value="Desarrollo Personal / No Ficción">Desarrollo Personal / No Ficción</option>
+                        <option value="Divulgación científica">Divulgación científica</option>
+                        <option value="Fantasía">Fantasía</option>
+                        <option value="Histórica">Histórica</option>
+                        <option value="Misterio / Suspense">Misterio / Suspense</option>
+                        <option value="Novela Negra / Thriller">Novela Negra / Thriller</option>
+                        <option value="Poesía / Teatro">Poesía / Teatro</option>
+                        <option value="Romántica / Erótica">Romántica / Erótica</option>
+                        <option value="Terror / Horror">Terror / Horror</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="input-fecha">Fecha de lectura:</label>
+                    <input type="date" id="input-fecha">
+                </div>
+
+                <div class="campo">
+                    <label for="input-portada">Nombre de la imagen de portada:</label>
+                    <input type="text" id="input-portada" placeholder="Ej: libro3.jpg">
+                </div>
+
+                <!-- VALORACIÓN CON ORDEN NATURAL DE SANEAMIENTO -->
+                <div class="campo">
+                    <label>Valoración:</label>
+                    <div class="rating-estrellas" id="grupo-input-valoracion">
+                        <input type="radio" name="valoracion" value="5" id="estrellas-5"><label
+                            for="estrellas-5">☆</label>
+                        <input type="radio" name="valoracion" value="4" id="estrellas-4"><label
+                            for="estrellas-4">☆</label>
+                        <input type="radio" name="valoracion" value="3" id="estrellas-3"><label
+                            for="estrellas-3">☆</label>
+                        <input type="radio" name="valoracion" value="2" id="estrellas-2"><label
+                            for="estrellas-2">☆</label>
+                        <input type="radio" name="valoracion" value="1" id="estrellas-1"><label
+                            for="estrellas-1">☆</label>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="input-sinopsis">Sinopsis</label>
+                    <textarea id="input-sinopsis" rows="3" placeholder="Pega aquí de qué trata..."></textarea>
+                </div>
+
+                <div class="campo" style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+                    <input type="checkbox" id="input-hermana" style="width: auto; margin: 0;">
+                    <label for="input-hermana" style="margin: 0; cursor: pointer;">¿Pasado a mi hermana?</label>
+                </div>
+
+                <div class="campo" style="margin-top: 15px;">
+                    <label for="input-saga">¿Nº de libro en la saga/trilogía? (0 si no lo es):</label>
+                    <input type="number" id="input-saga" min="0" value="0">
+                </div>
+                <!-- NUEVO: Checkbox libro no leído (Añadir) -->
+                <div class="campo" style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+                    <input type="checkbox" id="input-pendiente" style="width: auto; margin: 0;">
+                    <label for="input-pendiente"
+                        style="margin: 0; cursor: pointer; color: #e67e22; font-weight: bold;">¿Aún no lo he leído?
+                        (Pendiente)</label>
+                </div>
+
+                <button type="submit" class="btn-guardar">Guardar en mi Biblioteca</button>
+            </form>
+
+            <!-- FORMULARIO: EDICIÓN (Oculto por defecto) -->
+            <div id="contenedor-editar-libro" class="zona-editar" style="display: none;">
+                <h2>Editar Libro</h2>
+                <form id="formulario-editar-libro">
+                    <input type="hidden" id="editar-index">
+
+                    <div class="campo">
+                        <label for="editar-titulo">Título:</label>
+                        <input type="text" id="editar-titulo" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="editar-autor">Autor:</label>
+                        <input type="text" id="editar-autor" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="editar-genero">Género:</label>
+                        <select id="editar-genero">
+                            <option value="">No especificado</option>
+                            <option value="Aventura">Aventura</option>
+                            <option value="Biografía / Ensayo">Biografía / Ensayo</option>
+                            <option value="Ciencia Ficción">Ciencia Ficción</option>
+                            <option value="Desarrollo Personal / No Ficción">Desarrollo Personal / No Ficción</option>
+                            <option value="Divulgación científica">Divulgación científica</option>
+                            <option value="Fantasía">Fantasía</option>
+                            <option value="Histórica">Histórica</option>
+                            <option value="Misterio / Suspense">Misterio / Suspense</option>
+                            <option value="Novela Negra / Thriller">Novela Negra / Thriller</option>
+                            <option value="Poesía / Teatro">Poesía / Teatro</option>
+                            <option value="Romántica / Erótica">Romántica / Erótica</option>
+                            <option value="Terror / Horror">Terror / Horror</option>
+                            <option value="Otros">Otros</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="editar-fecha">Fecha de lectura:</label>
+                        <input type="date" id="editar-fecha">
+                    </div>
+
+                    <div class="campo">
+                        <label for="editar-portada">Nombre de la imagen de portada:</label>
+                        <input type="text" id="editar-portada">
+                    </div>
+
+                    <!-- VALORACIÓN EDICIÓN CON ORDEN NATURAL -->
+                    <div class="campo">
+                        <label>Valoración:</label>
+                        <div class="rating-estrellas" id="grupo-editar-valoracion">
+                            <input type="radio" name="editar-valoracion" value="5" id="editar-estrellas-5"><label
+                                for="editar-estrellas-5">☆</label>
+                            <input type="radio" name="editar-valoracion" value="4" id="editar-estrellas-4"><label
+                                for="editar-estrellas-4">☆</label>
+                            <input type="radio" name="editar-valoracion" value="3" id="editar-estrellas-3"><label
+                                for="editar-estrellas-3">☆</label>
+                            <input type="radio" name="editar-valoracion" value="2" id="editar-estrellas-2"><label
+                                for="editar-estrellas-2">☆</label>
+                            <input type="radio" name="editar-valoracion" value="1" id="editar-estrellas-1"><label
+                                for="editar-estrellas-1">☆</label>
+                        </div>
+                    </div>
+
+
+                    <div class="campo">
+                        <label for="editar-sinopsis">Sinopsis:</label>
+                        <textarea id="editar-sinopsis" rows="3"></textarea>
+                    </div>
+
+                    <div class="campo" style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+                        <input type="checkbox" id="editar-hermana" style="width: auto; margin: 0;">
+                        <label for="editar-hermana" style="margin: 0; cursor: pointer;">¿Pasado a mi hermana?</label>
+                    </div>
+
+                    <div class="campo" style="margin-top: 15px;">
+                        <label for="editar-saga">¿Nº de libro en la saga/trilogía? (0 si no lo es):</label>
+                        <input type="number" id="editar-saga" min="0" value="0">
+                    </div>
+                    <!-- NUEVO: Checkbox libro no leído (Editar) -->
+                    <div class="campo" style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+                        <input type="checkbox" id="editar-pendiente" style="width: auto; margin: 0;">
+                        <label for="editar-pendiente"
+                            style="margin: 0; cursor: pointer; color: #e67e22; font-weight: bold;">¿Aún no lo he leído?
+                            (Pendiente)</label>
+                    </div>
+
+                    <button type="submit" class="btn-guardar">Actualizar Libro</button>
+                    <button type="button" id="btn-cancelar-edicion" class="btn-backup btn-importar">Cancelar</button>
+                </form>
+            </div>
+
+            <!-- SECCIÓN DE COPIA DE SEGURIDAD -->
+            <div class="zona-backup">
+                <h3>Copia de Seguridad</h3>
+                <button type="button" id="btn-exportar" class="btn-backup btn-exportar">📥 Descargar Copia
+                    (.json)</button>
+                <button type="button" id="btn-disparar-importar" class="btn-backup btn-importar">📤 Restaurar Copia
+                    (.json)</button>
+                <input type="file" id="input-importar" accept=".json" style="display: none;">
+            </div>
+        </aside>
+
+        <!-- AREA DERECHA: BUSCADOR Y CATÁLOGO -->
+        <main class="contenido-derecho">
+            <!-- NUEVO: Botones de ordenación -->
+            <div class="contenedor-ordenacion">
+                <span>Ordenar por:</span>
+                <button type="button" id="btn-orden-titulo" class="btn-orden activo"> Título</button>
+                <button type="button" id="btn-orden-fecha" class="btn-orden"> Fecha de Lectura</button>
+            </div>
+            <input type="text" id="buscador" placeholder="Buscar por título o autor...">
+
+            <div id="contenedor-libros" class="contenedor-libros">
+                <!-- Las fichas se cargan dinámicamente mediante el archivo script.js -->
+            </div>
+        </main>
+
+    </div>
+
+    <!-- VINCULACIÓN DEL ARCHIVO DE LÓGICA -->
+    <script src="script.js"></script>
+</body>
+
+</html>
